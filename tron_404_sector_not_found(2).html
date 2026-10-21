@@ -476,6 +476,10 @@
         @media (prefers-reduced-motion: reduce) {
             #bitShape, #termOut .holo, .glitch::before, .glitch::after { animation: none; }
         }
+        :root[data-motion="off"] #bitShape, :root[data-motion="off"] #termOut .holo,
+        :root[data-motion="off"] .glitch::before, :root[data-motion="off"] .glitch::after,
+        :root[data-motion="off"] .pulse-dot { animation: none; }
+        .header-controls { display: flex; gap: 0.5rem; }
 
         /* Background Canvas */
         #bgCanvas {
@@ -501,7 +505,11 @@
             <div class="pulse-dot"></div>
             <span title="ENCOM 511">GRID OS v1</span>
         </div>
-        <div>
+        <div class="header-controls">
+            <!-- Motion Toggle Switch (for motion-sensitive visitors) -->
+            <button id="motionToggleBtn" aria-pressed="true" title="Turn background animation on or off">
+                <span id="motionText">MOTION: ON</span>
+            </button>
             <!-- Audio Toggle Switch -->
             <button id="soundToggleBtn">
                 <svg id="soundIconOn" style="width:14px;height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
@@ -712,6 +720,30 @@
             }
         });
 
+        // Motion Toggle: stops the moving grid, light trails and animations.
+        // Defaults to off when the system asks for reduced motion; the choice is remembered.
+        const motionToggleBtn = document.getElementById('motionToggleBtn');
+        const motionText = document.getElementById('motionText');
+        let motionEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        try {
+            const saved = localStorage.getItem('tron_404_motion');
+            if (saved !== null) motionEnabled = saved === 'on';
+        } catch (e) {}
+
+        function applyMotion() {
+            document.documentElement.dataset.motion = motionEnabled ? 'on' : 'off';
+            motionText.innerText = motionEnabled ? "MOTION: ON" : "MOTION: OFF";
+            motionToggleBtn.setAttribute('aria-pressed', motionEnabled);
+            if (!motionEnabled) hyperEnd = 0;
+        }
+
+        motionToggleBtn.addEventListener('click', () => {
+            motionEnabled = !motionEnabled;
+            try { localStorage.setItem('tron_404_motion', motionEnabled ? 'on' : 'off'); } catch (e) {}
+            applyMotion();
+            playSound('click');
+        });
+
         // Diagnostics Panel Toggle
         const diagnosticsBtn = document.getElementById('diagnosticsBtn');
         const diagnosticsPanel = document.getElementById('diagnosticsPanel');
@@ -758,7 +790,7 @@
 
             // Horizon Grid Setup
             const horizon = bgHeight * 0.45;
-            gridOffset = (gridOffset + 0.8) % 40;
+            if (motionEnabled) gridOffset = (gridOffset + 0.8) % 40;
 
             // Hyperspace jump overrides the grid while active
             if (hyperActive()) { drawHyperspace(); requestAnimationFrame(animateBackground); return; }
@@ -791,6 +823,7 @@
 
             // Render Light Trails
             bgTrails.forEach(trail => {
+                if (!motionEnabled) { drawTrail(trail); return; }
                 trail.x += trail.vx;
                 trail.y += trail.vy;
 
@@ -810,30 +843,33 @@
                 trail.history.push({ x: trail.x, y: trail.y });
                 if (trail.history.length > 25) trail.history.shift();
 
-                bgCtx.beginPath();
-                const tc = trail.color === 'primary' ? primary : trail.color;
-                bgCtx.strokeStyle = tc;
-                bgCtx.lineWidth = 2;
-                bgCtx.shadowColor = tc;
-                bgCtx.shadowBlur = 8;
-                for (let i = 0; i < trail.history.length - 1; i++) {
-                    bgCtx.moveTo(trail.history[i].x, trail.history[i].y);
-                    bgCtx.lineTo(trail.history[i + 1].x, trail.history[i + 1].y);
-                }
-                bgCtx.stroke();
-                bgCtx.shadowBlur = 0;
+                drawTrail(trail);
             });
 
             requestAnimationFrame(animateBackground);
         }
 
+        function drawTrail(trail) {
+            bgCtx.beginPath();
+            const tc = trail.color === 'primary' ? primary : trail.color;
+            bgCtx.strokeStyle = tc;
+            bgCtx.lineWidth = 2;
+            bgCtx.shadowColor = tc;
+            bgCtx.shadowBlur = 8;
+            for (let i = 0; i < trail.history.length - 1; i++) {
+                bgCtx.moveTo(trail.history[i].x, trail.history[i].y);
+                bgCtx.lineTo(trail.history[i + 1].x, trail.history[i + 1].y);
+            }
+            bgCtx.stroke();
+            bgCtx.shadowBlur = 0;
+        }
+
         // Hyperspace: stars streak outward from the center
         let hyperEnd = 0, hyperStart = 0, hyperStars = [];
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         function hyperActive() { return performance.now() < hyperEnd; }
         function jumpToHyperspace() {
             playSound('hyper');
-            if (reduceMotion) return;
+            if (!motionEnabled) return;
             hyperStars = Array.from({ length: 220 }, () => ({
                 a: Math.random() * Math.PI * 2,
                 d: Math.random() * 40 + 5,
@@ -1255,6 +1291,7 @@
         console.log('%c GREETINGS, PROGRAM. ', 'background:#000;color:#00fff2;font:bold 16px monospace;padding:6px;border:1px solid #00fff2;');
         console.log('%cOpen Diagnostics and type "help". Not everything is listed.\nThe Bit lives in the header. So does Konami.', 'color:#94a3b8;font-family:monospace;');
 
+        applyMotion();
         readPrimary();
         resizeGameCanvas();
         renderGame();
