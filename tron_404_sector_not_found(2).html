@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<!--
+    Greetings, program.
+    You found the source. Most Users never look this far.
+    Try: open Diagnostics and type "help". Not every command is listed.
+    Hint: up up down down left right left right b a
+    END OF LINE.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 // SECTOR NOT FOUND</title>
+    <style>
+        /* CSS Variables & Pure Native Styles for 100% Offline / Air-Gapped Operation */
+        :root {
+            --neon-cyan: #00fff2;
+            --neon-rgb: 0, 255, 242;
+            --neon-blue: #0088ff;
+            --neon-pink: #ff0055;
+            --neon-orange: #ffaa00;
+            --bg-dark: #030712;
+            --panel-bg: rgba(5, 11, 20, 0.85);
+            --font-tech: 'Consolas', 'Monaco', 'Courier New', monospace;
+            --font-display: 'Impact', 'Trebuchet MS', 'Segoe UI', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-tech);
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            user-select: none;
+        }
+
+        /* CRT Scanline FX */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.35) 50%,
+                rgba(0, 0, 0, 0.35)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.5;
+        }
+
+        /* Neon Glow Utility Classes */
+        .glow-cyan {
+            text-shadow: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+        }
+        .glow-pink {
+            text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+        }
+        .box-glow-cyan {
+            box-shadow: 0 0 12px rgba(var(--neon-rgb), 0.35), inset 0 0 12px rgba(var(--neon-rgb), 0.15);
+            border: 1px solid var(--neon-cyan);
+        }
+        .box-glow-pink {
+            box-shadow: 0 0 12px rgba(255, 0, 85, 0.35), inset 0 0 12px rgba(255, 0, 85, 0.15);
+            border: 1px solid var(--neon-pink);
+        }
+
+        /* Pure CSS Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+            font-family: var(--font-display);
+            font-weight: 900;
+            letter-spacing: 2px;
+            font-size: clamp(4rem, 12vw, 7rem);
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan);
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            clip: rect(0, 0, 0, 0);
+        }
+        .glitch::before {
+            left: -2px;
+            text-shadow: 2px 0 var(--neon-pink);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: 2px;
+            text-shadow: -2px 0 var(--neon-blue);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(20px, 9999px, 15px, 0); }
+            20% { clip: rect(60px, 9999px, 75px, 0); }
+            40% { clip: rect(10px, 9999px, 40px, 0); }
+            60% { clip: rect(80px, 9999px, 5px, 0); }
+            80% { clip: rect(30px, 9999px, 90px, 0); }
+            100% { clip: rect(50px, 9999px, 35px, 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(10px, 9999px, 85px, 0); }
+            25% { clip: rect(70px, 9999px, 10px, 0); }
+            50% { clip: rect(35px, 9999px, 50px, 0); }
+            75% { clip: rect(90px, 9999px, 20px, 0); }
+            100% { clip: rect(15px, 9999px, 60px, 0); }
+        }
+
+        /* Layout Component Classes */
+        header {
+            width: 100%;
+            max-width: 1100px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--neon-cyan);
+            font-weight: bold;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        button, .btn {
+            background: rgba(var(--neon-rgb), 0.05);
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        button:hover, .btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        .btn-pink {
+            background: rgba(255, 0, 85, 0.05);
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+        }
+        .btn-pink:hover {
+            background: var(--neon-pink);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+
+        .btn-dark {
+            background: rgba(15, 23, 42, 0.8);
+            color: #94a3b8;
+            border-color: #334155;
+        }
+        .btn-dark:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: none;
+        }
+
+        /* Main Grid Content */
+        main {
+            width: 100%;
+            max-width: 1100px;
+            padding: 1rem 1.5rem;
+            margin: auto 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            z-index: 10;
+        }
+
+        @media (min-width: 900px) {
+            main {
+                grid-template-columns: 1.1fr 0.9fr;
+                align-items: center;
+            }
+        }
+
+        .content-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            text-align: center;
+        }
+
+        @media (min-width: 900px) {
+            .content-left {
+                text-align: left;
+            }
+        }
+
+        .tag-badge {
+            align-self: center;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 0, 85, 0.5);
+            background: rgba(255, 0, 85, 0.1);
+            color: var(--neon-pink);
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            font-weight: bold;
+        }
+        @media (min-width: 900px) {
+            .tag-badge {
+                align-self: flex-start;
+            }
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+        }
+
+        p.desc {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        @media (min-width: 900px) {
+            p.desc { margin: 0; }
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            padding-top: 0.5rem;
+        }
+        @media (min-width: 900px) {
+            .btn-group { justify-content: flex-start; }
+        }
+
+        /* Diagnostics Terminal */
+        #diagnosticsPanel {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #0891b2;
+            border-radius: 4px;
+            text-align: left;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            line-height: 1.5;
+        }
+
+        /* Game Panel Styling */
+        .game-panel {
+            background: var(--panel-bg);
+            border: 1px solid rgba(var(--neon-rgb), 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .game-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .score-board {
+            text-align: right;
+            font-size: 0.65rem;
+            color: #64748b;
+            letter-spacing: 1px;
+        }
+
+        .score-num {
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            font-weight: bold;
+        }
+
+        .game-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #000;
+            border: 1px solid #1e293b;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #gameCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        #gameOverlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+            gap: 0.75rem;
+        }
+
+        #overlayTitle {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+        }
+
+        #overlaySub {
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            max-width: 250px;
+            line-height: 1.4;
+        }
+
+        /* Mobile D-Pad Touch Controls */
+        .mobile-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+        }
+        @media (min-width: 640px) {
+            .mobile-controls { display: none; }
+        }
+
+        .dpad-btn {
+            padding: 0.75rem;
+            background: rgba(var(--neon-rgb), 0.05);
+            border: 1px solid rgba(var(--neon-rgb), 0.2);
+            color: var(--neon-cyan);
+            text-align: center;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        .dpad-btn:active {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        .controls-hint {
+            display: none;
+            font-size: 0.65rem;
+            color: #475569;
+            text-align: center;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+        }
+        @media (min-width: 640px) {
+            .controls-hint { display: block; }
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            max-width: 1100px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #475569;
+            border-top: 1px solid rgba(15, 23, 42, 0.8);
+            z-index: 10;
+        }
+        @media (min-width: 640px) {
+            footer {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        /* ---- Easter egg styles ---- */
+        :root[data-theme="clu"] { --neon-cyan: #ff9a1f; --neon-rgb: 255, 154, 31; --neon-blue: #ff5e00; }
+        :root[data-theme="mcp"] { --neon-cyan: #ff2b2b; --neon-rgb: 255, 43, 43; --neon-blue: #a30000; }
+
+        #termOut { max-height: 170px; overflow-y: auto; }
+        #termOut .holo { color: #7cc8ff; text-shadow: 0 0 6px #7cc8ff; animation: holo 0.12s steps(2) 12; }
+        #termOut .warn { color: var(--neon-pink); }
+        #termOut .echo { color: #64748b; }
+        @keyframes holo { 50% { opacity: 0.35; transform: translateX(1px); } }
+        .term-line { display: flex; gap: 0.4rem; margin-top: 0.4rem; }
+        #termIn {
+            flex: 1; background: transparent; border: none; outline: none;
+            color: var(--neon-cyan); font: inherit; caret-color: var(--neon-cyan);
+            user-select: text; -webkit-user-select: text;
+        }
+
+        /* Bit: says YES or NO, nothing else */
+        #bit {
+            position: fixed; top: 4.5rem; left: 50%; z-index: 60;
+            display: none; flex-direction: column; align-items: center; gap: 0.4rem;
+            transform: translateX(-50%); pointer-events: none;
+            font-weight: bold; letter-spacing: 3px;
+        }
+        #bitShape { width: 46px; height: 46px; animation: bitspin 1.2s linear infinite; }
+        #bit.yes #bitShape { background: #ffd23f; box-shadow: 0 0 20px #ffd23f;
+            clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+        #bit.no #bitShape { background: #ff3b3b;
+            clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+        #bit.yes #bitWord { color: #ffd23f; } #bit.no #bitWord { color: #ff3b3b; }
+        @keyframes bitspin { to { transform: rotate(360deg); } }
+
+        .glitch { cursor: default; }
+        .pulse-dot { cursor: pointer; }
+
+        @media (prefers-reduced-motion: reduce) {
+            #bitShape, #termOut .holo, .glitch::before, .glitch::after { animation: none; }
+        }
+
+        /* Background Canvas */
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background for Grid & Light Trails -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- CRT Scanline Effect -->
+    <div class="scanlines"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="system-status">
+            <div class="pulse-dot"></div>
+            <span title="ENCOM 511">GRID OS v1</span>
+        </div>
+        <div>
+            <!-- Audio Toggle Switch -->
+            <button id="soundToggleBtn">
+                <svg id="soundIconOn" style="width:14px;height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                <svg id="soundIconOff" style="width:14px;height:14px;display:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
+                <span id="soundText">SFX: ON</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Left Column: Banner & Info -->
+        <div class="content-left">
+            <div class="tag-badge">CRITICAL ERROR DETECTED</div>
+            
+            <div class="glitch" data-text="404">404</div>
+            
+            <h2 class="glow-cyan">// SECTOR NOT FOUND</h2>
+
+            <p class="desc">
+                The requested memory block is deleted or has been deregistered from the Grid core.
+            </p>
+
+            <!-- Navigation Links -->
+            <div class="btn-group">
+                <a href="/" class="btn box-glow-cyan">
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 00-1 1m-6 0h6"></path></svg>
+                    Main Grid
+                </a>
+                
+                <button onclick="window.location.reload()" class="btn btn-pink box-glow-pink">
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Reboot Sector
+                </button>
+
+                <button id="diagnosticsBtn" class="btn btn-dark">
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Diagnostics
+                </button>
+            </div>
+
+            <!-- Diagnostics Terminal -->
+            <div id="diagnosticsPanel">
+                <div id="termOut">
+                    <div>> INITIATING GRID SCAN...</div>
+                    <div>> ERROR 0x800404: ROUTE_NOT_RESOLVED</div>
+                    <div>> SUGGESTION: Navigate back to active grid sectors or play Grid Dodge.</div>
+                    <div class="echo">> Type 'help' for commands.</div>
+                </div>
+                <label class="term-line"><span>$</span>
+                    <input id="termIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Diagnostics command">
+                </label>
+            </div>
+        </div>
+
+        <!-- Right Column: Interactive Light Cycle Mini-Game -->
+        <div class="game-panel">
+            <div class="game-header">
+                <div class="game-title">
+                    <span class="pulse-dot"></span>
+                    LIGHT CYCLE RUNNER
+                </div>
+                <div class="score-board">
+                    SCORE / HIGH<br>
+                    <span id="scoreVal" class="score-num">0</span> / <span id="highScoreVal" class="score-num" style="color:var(--neon-pink);">0</span>
+                </div>
+            </div>
+
+            <!-- Game Canvas Canvas Container -->
+            <div class="game-wrapper">
+                <canvas id="gameCanvas"></canvas>
+
+                <!-- Overlay -->
+                <div id="gameOverlay">
+                    <div id="overlayTitle" class="glow-cyan">GRID DODGE</div>
+                    <div id="overlaySub">Use [WASD] or [ARROW KEYS] to maneuver your cycle and avoid red grid corruption!</div>
+                    <button id="startGameBtn" class="btn box-glow-cyan">INITIALIZE CYCLE</button>
+                </div>
+            </div>
+
+            <!-- Touch Controls (Mobile) -->
+            <div class="mobile-controls">
+                <div></div>
+                <div id="btnUp" class="dpad-btn">▲</div>
+                <div></div>
+                <div id="btnLeft" class="dpad-btn">◀</div>
+                <div id="btnDown" class="dpad-btn">▼</div>
+                <div id="btnRight" class="dpad-btn">▶</div>
+            </div>
+            
+            <div class="controls-hint">
+                CONTROLS: [WASD] OR [ARROW KEYS] TO MANEUVER
+            </div>
+        </div>
+    </main>
+
+    <!-- The Bit -->
+    <div id="bit" aria-live="polite"><span id="bitShape"></span><span id="bitWord"></span></div>
+
+    <!-- Footer -->
+    <footer>
+        <div>SYSTEM STATUS: <span style="color:var(--neon-cyan);"> ONLINE</span></div>
+        <div title="Prisoner transfer from cell block 1138">SECTOR: 404 // ZERO DEPENDENCIES</div>
+    </footer>
+
+    <!-- Pure Vanilla JavaScript (Audio Synth, Grid Animation, Game) -->
+    <script>
+        // --- Web Audio API Procedural SFX Engine ---
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    audioCtx = new AudioContext();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const now = ctx.currentTime;
+
+                if (type === 'move') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'score') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.05); // E5
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'crash') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(120, now);
+                    osc.frequency.exponentialRampToValueAtTime(30, now + 0.3);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'hyper') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(40, now);
+                    osc.frequency.exponentialRampToValueAtTime(900, now + 1.6);
+                    gain.gain.setValueAtTime(0.0001, now);
+                    gain.gain.exponentialRampToValueAtTime(0.06, now + 1.2);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
+                    osc.start(now);
+                    osc.stop(now + 1.8);
+                } else if (type === 'yes' || type === 'no') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(type === 'yes' ? 880 : 140, now);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'click') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(800, now);
+                    gain.gain.setValueAtTime(0.03, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+                    osc.start(now);
+                    osc.stop(now + 0.03);
+                }
+            } catch (e) {
+                // Audio safe fallback
+            }
+        }
+
+        // Sound Toggle
+        const soundToggleBtn = document.getElementById('soundToggleBtn');
+        const soundIconOn = document.getElementById('soundIconOn');
+        const soundIconOff = document.getElementById('soundIconOff');
+        const soundText = document.getElementById('soundText');
+
+        soundToggleBtn.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            if (soundEnabled) {
+                soundIconOn.style.display = 'inline';
+                soundIconOff.style.display = 'none';
+                soundText.innerText = "SFX: ON";
+                playSound('click');
+            } else {
+                soundIconOn.style.display = 'none';
+                soundIconOff.style.display = 'inline';
+                soundText.innerText = "SFX: OFF";
+            }
+        });
+
+        // Diagnostics Panel Toggle
+        const diagnosticsBtn = document.getElementById('diagnosticsBtn');
+        const diagnosticsPanel = document.getElementById('diagnosticsPanel');
+        diagnosticsBtn.addEventListener('click', () => {
+            playSound('click');
+            diagnosticsPanel.style.display = (diagnosticsPanel.style.display === 'block') ? 'none' : 'block';
+        });
+
+        // Current theme color, read from CSS so canvases follow theme swaps
+        let primary = '#00fff2';
+        function readPrimary() {
+            primary = getComputedStyle(document.documentElement).getPropertyValue('--neon-cyan').trim() || '#00fff2';
+        }
+
+        // --- Background Perspective Grid Canvas Animation ---
+        const bgCanvas = document.getElementById('bgCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+
+        let bgWidth, bgHeight;
+        function resizeBgCanvas() {
+            bgWidth = bgCanvas.width = window.innerWidth;
+            bgHeight = bgCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeBgCanvas);
+        resizeBgCanvas();
+
+        // Background Light Trails
+        const bgTrails = [];
+        for (let i = 0; i < 8; i++) {
+            bgTrails.push({
+                x: Math.random() * bgWidth,
+                y: Math.random() * bgHeight,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
+                history: [],
+                color: Math.random() > 0.3 ? 'primary' : '#ff0055'
+            });
+        }
+
+        let gridOffset = 0;
+        function animateBackground() {
+            bgCtx.fillStyle = '#030712';
+            bgCtx.fillRect(0, 0, bgWidth, bgHeight);
+
+            // Horizon Grid Setup
+            const horizon = bgHeight * 0.45;
+            gridOffset = (gridOffset + 0.8) % 40;
+
+            // Hyperspace jump overrides the grid while active
+            if (hyperActive()) { drawHyperspace(); requestAnimationFrame(animateBackground); return; }
+
+            // Perspective Grid Lines
+            bgCtx.globalAlpha = 0.12;
+            bgCtx.strokeStyle = primary;
+            bgCtx.lineWidth = 1;
+
+            // Vertical Perspective Lines
+            const centerX = bgWidth / 2;
+            for (let x = -bgWidth * 1.5; x <= bgWidth * 2.5; x += 80) {
+                bgCtx.beginPath();
+                bgCtx.moveTo(x, bgHeight);
+                bgCtx.lineTo(centerX + (x - centerX) * 0.05, horizon);
+                bgCtx.stroke();
+            }
+
+            // Horizontal Moving Lines
+            for (let y = horizon; y < bgHeight; y += 15) {
+                const py = y + (gridOffset * ((y - horizon) / (bgHeight - horizon)));
+                if (py > bgHeight) continue;
+                bgCtx.beginPath();
+                bgCtx.moveTo(0, py);
+                bgCtx.lineTo(bgWidth, py);
+                bgCtx.stroke();
+            }
+
+            bgCtx.globalAlpha = 1;
+
+            // Render Light Trails
+            bgTrails.forEach(trail => {
+                trail.x += trail.vx;
+                trail.y += trail.vy;
+
+                if (trail.x < 0 || trail.x > bgWidth) trail.vx *= -1;
+                if (trail.y < horizon || trail.y > bgHeight) trail.vy *= -1;
+
+                if (Math.random() < 0.02) {
+                    if (Math.random() > 0.5) {
+                        trail.vx = trail.vy;
+                        trail.vy = 0;
+                    } else {
+                        trail.vy = trail.vx;
+                        trail.vx = 0;
+                    }
+                }
+
+                trail.history.push({ x: trail.x, y: trail.y });
+                if (trail.history.length > 25) trail.history.shift();
+
+                bgCtx.beginPath();
+                const tc = trail.color === 'primary' ? primary : trail.color;
+                bgCtx.strokeStyle = tc;
+                bgCtx.lineWidth = 2;
+                bgCtx.shadowColor = tc;
+                bgCtx.shadowBlur = 8;
+                for (let i = 0; i < trail.history.length - 1; i++) {
+                    bgCtx.moveTo(trail.history[i].x, trail.history[i].y);
+                    bgCtx.lineTo(trail.history[i + 1].x, trail.history[i + 1].y);
+                }
+                bgCtx.stroke();
+                bgCtx.shadowBlur = 0;
+            });
+
+            requestAnimationFrame(animateBackground);
+        }
+
+        // Hyperspace: stars streak outward from the center
+        let hyperEnd = 0, hyperStart = 0, hyperStars = [];
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        function hyperActive() { return performance.now() < hyperEnd; }
+        function jumpToHyperspace() {
+            playSound('hyper');
+            if (reduceMotion) return;
+            hyperStars = Array.from({ length: 220 }, () => ({
+                a: Math.random() * Math.PI * 2,
+                d: Math.random() * 40 + 5,
+                v: Math.random() * 0.04 + 0.02
+            }));
+            hyperStart = performance.now();
+            hyperEnd = hyperStart + 2600;
+        }
+        function drawHyperspace() {
+            const t = (performance.now() - hyperStart) / 1000;
+            bgCtx.fillStyle = 'rgba(3, 7, 18, 0.35)';
+            bgCtx.fillRect(0, 0, bgWidth, bgHeight);
+            const cx = bgWidth / 2, cy = bgHeight / 2;
+            bgCtx.lineWidth = 1.5;
+            hyperStars.forEach(st => {
+                const d0 = st.d;
+                st.d *= 1 + st.v * (1 + t * 3);
+                bgCtx.strokeStyle = Math.random() > 0.15 ? '#e6f4ff' : '#7cc8ff';
+                bgCtx.beginPath();
+                bgCtx.moveTo(cx + Math.cos(st.a) * d0, cy + Math.sin(st.a) * d0);
+                bgCtx.lineTo(cx + Math.cos(st.a) * st.d, cy + Math.sin(st.a) * st.d);
+                bgCtx.stroke();
+                if (st.d > Math.max(bgWidth, bgHeight)) st.d = Math.random() * 30 + 5;
+            });
+        }
+        animateBackground();
+
+        // --- Retro Light Cycle Game Engine ---
+        const gameCanvas = document.getElementById('gameCanvas');
+        const gCtx = gameCanvas.getContext('2d');
+        const scoreVal = document.getElementById('scoreVal');
+        const highScoreVal = document.getElementById('highScoreVal');
+        const gameOverlay = document.getElementById('gameOverlay');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlaySub = document.getElementById('overlaySub');
+        const startGameBtn = document.getElementById('startGameBtn');
+
+        const GRID_SIZE = 15;
+        let cellSize = 20;
+
+        function resizeGameCanvas() {
+            const rect = gameCanvas.parentElement.getBoundingClientRect();
+            gameCanvas.width = rect.width;
+            gameCanvas.height = rect.width;
+            cellSize = gameCanvas.width / GRID_SIZE;
+        }
+        window.addEventListener('resize', resizeGameCanvas);
+        resizeGameCanvas();
+
+        let player = { x: 7, y: 12, dirX: 0, dirY: -1, trail: [] };
+        let obstacles = [];
+        let dataDiscs = [];
+        let score = 0;
+        let highScore = localStorage.getItem('tron_404_highscore') || 0;
+        highScoreVal.innerText = highScore;
+        let gameRunning = false;
+        let gameLoopTimer = null;
+        let speed = 180; // Step delay in ms
+
+        function initGame() {
+            player = {
+                x: Math.floor(GRID_SIZE / 2),
+                y: GRID_SIZE - 2,
+                dirX: 0,
+                dirY: -1,
+                trail: []
+            };
+            obstacles = [];
+            dataDiscs = [];
+            score = 0;
+            speed = 130;
+            scoreVal.innerText = score;
+            spawnDisc();
+        }
+
+        function spawnDisc() {
+            let discX, discY;
+            do {
+                discX = Math.floor(Math.random() * GRID_SIZE);
+                discY = Math.floor(Math.random() * GRID_SIZE);
+            } while (discX === player.x && discY === player.y);
+            dataDiscs.push({ x: discX, y: discY });
+        }
+
+        function spawnObstacle() {
+            if (Math.random() < 0.6) {
+                let obsX = Math.floor(Math.random() * GRID_SIZE);
+                let obsY = Math.floor(Math.random() * (GRID_SIZE - 4));
+                if (obsX !== player.x || obsY !== player.y) {
+                    obstacles.push({ x: obsX, y: obsY });
+                }
+            }
+        }
+
+        function handleInput(key) {
+            if (!gameRunning) return;
+            let moved = false;
+            if ((key === 'ArrowUp' || key === 'w' || key === 'W') && player.dirY !== 1) {
+                player.dirX = 0; player.dirY = -1; moved = true;
+            } else if ((key === 'ArrowDown' || key === 's' || key === 'S') && player.dirY !== -1) {
+                player.dirX = 0; player.dirY = 1; moved = true;
+            } else if ((key === 'ArrowLeft' || key === 'a' || key === 'A') && player.dirX !== 1) {
+                player.dirX = -1; player.dirY = 0; moved = true;
+            } else if ((key === 'ArrowRight' || key === 'd' || key === 'D') && player.dirX !== -1) {
+                player.dirX = 1; player.dirY = 0; moved = true;
+            }
+            if (moved) playSound('move');
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.target === termIn) return;
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd'].includes(e.key)) {
+                if (gameRunning) e.preventDefault();
+                handleInput(e.key);
+            }
+        });
+
+        document.getElementById('btnUp').addEventListener('click', () => handleInput('ArrowUp'));
+        document.getElementById('btnDown').addEventListener('click', () => handleInput('ArrowDown'));
+        document.getElementById('btnLeft').addEventListener('click', () => handleInput('ArrowLeft'));
+        document.getElementById('btnRight').addEventListener('click', () => handleInput('ArrowRight'));
+
+        function updateGame() {
+            player.trail.push({ x: player.x, y: player.y });
+            if (player.trail.length > 8) player.trail.shift();
+
+            player.x += player.dirX;
+            player.y += player.dirY;
+
+            // Boundaries
+            if (player.x < 0 || player.x >= GRID_SIZE || player.y < 0 || player.y >= GRID_SIZE) {
+                gameOver();
+                return;
+            }
+
+            // Obstacles
+            for (let obs of obstacles) {
+                if (obs.x === player.x && obs.y === player.y) {
+                    gameOver();
+                    return;
+                }
+            }
+
+            // Trail
+            for (let t of player.trail) {
+                if (t.x === player.x && t.y === player.y) {
+                    gameOver();
+                    return;
+                }
+            }
+
+            // Pickup Discs
+            for (let i = dataDiscs.length - 1; i >= 0; i--) {
+                if (dataDiscs[i].x === player.x && dataDiscs[i].y === player.y) {
+                    dataDiscs.splice(i, 1);
+                    score += 10;
+                    scoreVal.innerText = score;
+                    playSound('score');
+                    if (score > highScore) {
+                        highScore = score;
+                        highScoreVal.innerText = highScore;
+                        localStorage.setItem('tron_404_highscore', highScore);
+                    }
+                    spawnDisc();
+                    spawnObstacle();
+                    if (speed > 60) speed -= 2;
+                }
+            }
+
+            renderGame();
+
+            if (gameRunning) {
+                gameLoopTimer = setTimeout(updateGame, speed);
+            }
+        }
+
+        function renderGame() {
+            gCtx.fillStyle = '#050b14';
+            gCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+            // Grid
+            gCtx.strokeStyle = '#0f2b3c';
+            gCtx.lineWidth = 1;
+            for (let i = 0; i <= GRID_SIZE; i++) {
+                gCtx.beginPath();
+                gCtx.moveTo(i * cellSize, 0);
+                gCtx.lineTo(i * cellSize, gameCanvas.height);
+                gCtx.stroke();
+
+                gCtx.beginPath();
+                gCtx.moveTo(0, i * cellSize);
+                gCtx.lineTo(gameCanvas.width, i * cellSize);
+                gCtx.stroke();
+            }
+
+            // Data Discs
+            dataDiscs.forEach(disc => {
+                gCtx.fillStyle = primary;
+                gCtx.shadowColor = primary;
+                gCtx.shadowBlur = 10;
+                gCtx.beginPath();
+                gCtx.arc(
+                    disc.x * cellSize + cellSize / 2,
+                    disc.y * cellSize + cellSize / 2,
+                    cellSize / 3,
+                    0,
+                    Math.PI * 2
+                );
+                gCtx.fill();
+                gCtx.shadowBlur = 0;
+            });
+
+            // Corruption Blocks
+            obstacles.forEach(obs => {
+                gCtx.fillStyle = '#ff0055';
+                gCtx.shadowColor = '#ff0055';
+                gCtx.shadowBlur = 8;
+                gCtx.fillRect(
+                    obs.x * cellSize + 2,
+                    obs.y * cellSize + 2,
+                    cellSize - 4,
+                    cellSize - 4
+                );
+                gCtx.shadowBlur = 0;
+            });
+
+            // Cycle Trail
+            player.trail.forEach((t, idx) => {
+                gCtx.globalAlpha = (idx + 1) / player.trail.length;
+                gCtx.fillStyle = primary;
+                gCtx.fillRect(
+                    t.x * cellSize + 3,
+                    t.y * cellSize + 3,
+                    cellSize - 6,
+                    cellSize - 6
+                );
+            });
+
+            gCtx.globalAlpha = 1;
+
+            // Player Cycle
+            gCtx.fillStyle = '#ffffff';
+            gCtx.shadowColor = primary;
+            gCtx.shadowBlur = 12;
+            gCtx.fillRect(
+                player.x * cellSize + 1,
+                player.y * cellSize + 1,
+                cellSize - 2,
+                cellSize - 2
+            );
+            gCtx.shadowBlur = 0;
+        }
+
+        function startGame() {
+            getAudioContext();
+            playSound('click');
+            initGame();
+            gameRunning = true;
+            gameOverlay.style.display = 'none';
+            clearTimeout(gameLoopTimer);
+            updateGame();
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            playSound('crash');
+            clearTimeout(gameLoopTimer);
+
+            overlayTitle.innerText = score >= 150 ? "END OF LINE" : (score === 0 ? "DEREZZED" : "DEREGISTERED");
+            overlayTitle.className = "glow-pink";
+            overlaySub.innerText = `Final Score: ${score} pts | High Score: ${highScore}`;
+            startGameBtn.innerText = "RE-INITIALIZE CYCLE";
+            gameOverlay.style.display = 'flex';
+        }
+
+        startGameBtn.addEventListener('click', startGame);
+
+        // =====================================================
+        //  EASTER EGGS (Tron + Star Wars). No dependencies.
+        // =====================================================
+        const termOut = document.getElementById('termOut');
+        const termIn = document.getElementById('termIn');
+        const descEl = document.querySelector('p.desc');
+        const badgeEl = document.querySelector('.tag-badge');
+        const originalDesc = descEl.textContent.trim();
+
+        function print(lines, cls) {
+            [].concat(lines).forEach(line => {
+                const d = document.createElement('div');
+                d.textContent = '> ' + line;
+                if (cls) d.className = cls;
+                termOut.appendChild(d);
+            });
+            termOut.scrollTop = termOut.scrollHeight;
+        }
+        function openTerminal() {
+            diagnosticsPanel.style.display = 'block';
+        }
+        function setTheme(name) {
+            if (name) document.documentElement.dataset.theme = name;
+            else delete document.documentElement.dataset.theme;
+            readPrimary();
+            renderGame();
+        }
+
+        // The Bit: answers YES or NO
+        const bitEl = document.getElementById('bit');
+        let bitTimer = null;
+        function summonBit(answer) {
+            const yes = answer === undefined ? Math.random() > 0.5 : answer;
+            bitEl.className = yes ? 'yes' : 'no';
+            document.getElementById('bitWord').textContent = yes ? 'YES' : 'NO';
+            bitEl.style.display = 'flex';
+            playSound(yes ? 'yes' : 'no');
+            clearTimeout(bitTimer);
+            bitTimer = setTimeout(() => { bitEl.style.display = 'none'; }, 1800);
+        }
+        document.querySelectorAll('header .pulse-dot').forEach(d => d.addEventListener('click', () => summonBit()));
+
+        function jediMindTrick() {
+            descEl.textContent = "This isn't the page you're looking for. You can go about your business. Move along.";
+            setTimeout(() => { descEl.textContent = originalDesc; }, 6000);
+        }
+
+        // Terminal commands. 'help' only lists the boring ones.
+        const cmd = {
+            'help': () => print(['COMMANDS: help, scan, whoami, ls, cat <file>, clear, exit', 'Some commands are not listed. Programs are curious.']),
+            'scan': () => print(['INITIATING GRID SCAN...', 'ERROR 0x800404: ROUTE_NOT_RESOLVED', 'LAST KNOWN LOCATION: DETENTION LEVEL AA-23, CELL 1138']),
+            'whoami': () => print(['You are a User.', 'Programs here believe in you.']),
+            'ls': () => print(['flynn_arcade.log   bit.exe   space_paranoids.bin', 'death_star_plans.dat   [ENCRYPTED]']),
+            'cat flynn_arcade.log': () => print(['Last login: 1982. Graffiti on the wall reads: FLYNN LIVES.']),
+            'cat space_paranoids.bin': () => print(['SPACE PARANOIDS v1.0', 'AUTHOR: K. FLYNN', 'NOTE: authorship records show signs of tampering by user DILLINGER.'], 'warn'),
+            'cat death_star_plans.dat': () => print(['DECRYPTING...', 'Thermal exhaust port: 2 meters wide. Directly below the main port.', 'Ray-shielded? Yes. Proton torpedoes recommended.'], 'holo'),
+            'cat bit.exe': () => print(['Binary file. Try running it.']),
+            'bit.exe': () => summonBit(),
+            'flynn': () => print('FLYNN LIVES.'),
+            'tron': () => { setTheme(''); print('I fight for the Users.'); },
+            'clu': () => { setTheme('clu'); print(['Perfection is the goal.', 'Grid recolored. Type "tron" to restore.']); },
+            'mcp': () => { setTheme('mcp'); print(['MASTER CONTROL ONLINE.', 'Your access has been suspended.', 'END OF LINE.'], 'warn'); },
+            'end of line': () => { print('END OF LINE.'); setTimeout(() => { diagnosticsPanel.style.display = 'none'; }, 600); },
+            'execute order 66': () => { setTheme('mcp'); print(['It will be done, my lord.'], 'warn'); badgeEl.textContent = 'ORDER 66 EXECUTED'; },
+            'help me': () => print(['Help me, Obi-Wan Kenobi.', "You're my only hope."], 'holo'),
+            'hello there': () => print('General Kenobi.'),
+            'use the force': () => { print('*waves hand*'); jediMindTrick(); },
+            'punch it': () => { print('Jumping to lightspeed.'); jumpToHyperspace(); },
+            'i am your father': () => print('Noooooooooooo.'),
+            'vader': () => print('*mechanical breathing*'),
+            'castor': () => print('Biodigital jazz, man.'),
+            'thx 1138': () => print('Prisoner transfer from cell block 1138.'),
+            'rm -rf /': () => print(['Derezzing the Grid...', 'Just kidding. The MCP has backups.'], 'warn'),
+            'clear': () => { termOut.innerHTML = ''; },
+            'exit': () => { diagnosticsPanel.style.display = 'none'; }
+        };
+        // Aliases
+        Object.assign(cmd, {
+            './bit.exe': cmd['bit.exe'], 'bit': cmd['bit.exe'],
+            'order 66': cmd['execute order 66'], 'obiwan': cmd['help me'], 'obi-wan': cmd['help me'],
+            'force': cmd['use the force'], 'hyperspace': cmd['punch it'], 'jump': cmd['punch it'],
+            'zuse': cmd['castor'], '1138': cmd['thx 1138'], 'thx': cmd['thx 1138'],
+            'cat death_star_plans': cmd['cat death_star_plans.dat'], 'greetings': () => print('Greetings, program.'),
+            'hello': () => print('Greetings, program.')
+        });
+
+        termIn.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter') return;
+            const raw = termIn.value.trim();
+            termIn.value = '';
+            if (!raw) return;
+            print('$ ' + raw, 'echo');
+            const c = raw.toLowerCase().replace(/[!?.]+$/, '').replace(/\s+/g, ' ');
+            playSound('click');
+            if (cmd[c]) cmd[c]();
+            else if (c.startsWith('sudo')) print('MCP: No User outranks Master Control.', 'warn');
+            else print(`COMMAND NOT RECOGNIZED: ${raw}. Type 'help'.`, 'warn');
+        });
+        diagnosticsBtn.addEventListener('click', () => {
+            if (diagnosticsPanel.style.display === 'block') termIn.focus({ preventScroll: true });
+        });
+
+        // Konami code: jump to hyperspace
+        const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+        let konamiPos = 0;
+        window.addEventListener('keydown', (e) => {
+            if (e.target === termIn) return;
+            const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+            konamiPos = (k === konami[konamiPos]) ? konamiPos + 1 : (k === konami[0] ? 1 : 0);
+            if (konamiPos === konami.length) {
+                konamiPos = 0;
+                jumpToHyperspace();
+                openTerminal();
+                print('CHEAT ACCEPTED. Punch it, Chewie.', 'holo');
+            }
+        });
+
+        // Click the 404 five times: Jedi mind trick
+        let glitchClicks = 0, glitchTimer = null;
+        document.querySelector('.glitch').addEventListener('click', () => {
+            glitchClicks++;
+            clearTimeout(glitchTimer);
+            glitchTimer = setTimeout(() => { glitchClicks = 0; }, 1500);
+            if (glitchClicks >= 5) { glitchClicks = 0; playSound('click'); jediMindTrick(); }
+        });
+
+        // Tab title changes when the User leaves
+        const originalTitle = document.title;
+        document.addEventListener('visibilitychange', () => {
+            document.title = document.hidden ? 'END OF LINE.' : originalTitle;
+        });
+
+        // Date-based badges
+        (() => {
+            const d = new Date(), m = d.getMonth() + 1, day = d.getDate();
+            if (m === 5 && day === 4) badgeEl.textContent = 'MAY THE 4TH BE WITH YOU';
+            else if (m === 5 && day === 25) badgeEl.textContent = 'A NEW HOPE // 05.25.1977';
+            else if (m === 7 && day === 9) badgeEl.textContent = 'TRON DAY // 07.09.1982';
+        })();
+
+        // For the ones who open DevTools
+        console.log('%c GREETINGS, PROGRAM. ', 'background:#000;color:#00fff2;font:bold 16px monospace;padding:6px;border:1px solid #00fff2;');
+        console.log('%cOpen Diagnostics and type "help". Not everything is listed.\nThe Bit lives in the header. So does Konami.', 'color:#94a3b8;font-family:monospace;');
+
+        readPrimary();
+        resizeGameCanvas();
+        renderGame();
+    </script>
+</body>
+</html>
