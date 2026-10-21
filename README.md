@@ -73,6 +73,7 @@ GitHub Pages, Netlify, Cloudflare Pages and Vercel (static) all pick up a `404.h
 | Steer the light cycle | WASD or arrow keys | On-screen D-pad |
 | Start or restart | **Initialize Cycle** button | Same |
 | Toggle sound | **SFX** button in the header | Same |
+| Toggle background motion | **Motion** button in the header | Same |
 | Open the terminal | **Diagnostics** button | Same |
 
 Each data disc is worth 10 points, and the cycle speeds up a little with every pickup. The high score is stored in `localStorage` under the key `tron_404_highscore`.
@@ -122,7 +123,7 @@ Commands live in the `cmd` object. Add an entry whose key is the lowercase comma
 
 The page works in any current browser: Chrome, Edge, Firefox and Safari, on desktop and mobile. It uses `<canvas>`, the Web Audio API and `localStorage`, and degrades gracefully if audio or storage is unavailable. Browsers don't allow sound until the visitor interacts with the page, so the first sound plays after the first click or keypress.
 
-Spinning, flickering and hyperspace effects are disabled when the visitor's system has **reduced motion** turned on.
+The **Motion** button in the header freezes the moving grid and light trails and turns off spinning, flickering and hyperspace effects, for visitors who get motion sick. It starts off when the visitor's system has **reduced motion** turned on, and the choice is remembered in `localStorage` under the key `tron_404_motion`.
 
 ## Easter eggs
 
