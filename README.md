@@ -2,6 +2,10 @@
 
 A Tron-themed 404 page with a playable light-cycle mini-game and a pile of hidden Tron and Star Wars easter eggs. It's one self-contained HTML file with no external dependencies: no frameworks, no CDN scripts, no web fonts and no images. It works offline and on air-gapped networks.
 
+# Screen Shots
+<img width="1150" height="549" alt="tron-1" src="https://github.com/user-attachments/assets/21618c57-50b7-4834-8627-1a6a2c948896" />
+
+
 ## Features
 
 - **Animated background.** A perspective grid scrolls toward a horizon while light-cycle trails race across it, all drawn on a `<canvas>`.
